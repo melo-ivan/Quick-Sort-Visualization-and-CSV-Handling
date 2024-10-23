@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# CSV files
+*.csv
+
+# Outros arquivos de log
+*.log
+
+# Ambiente virtual
+env/
+venv/
+
+# IDEs
+.vscode/
+.idea/
