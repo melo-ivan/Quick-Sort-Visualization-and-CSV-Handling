@@ -1,0 +1,71 @@
+# -*- coding: utf-8 -*-
+"""
+    Main file to run the API
+"""
+from pprint import pprint
+
+
+# --------------------------------------------------------------------------
+# Função para o algoritmo de Quick Sort
+# --------------------------------------------------------------------------
+def quick_sort(arr):
+    global passos
+    passos += 1  # Incrementa o contador de passos
+
+    # Função auxiliar para dividir o array e retornar o índice do pivô
+    def partition(array, low, high):
+        pivot = array[high]  # Pivô é o último elemento
+        i = low - 1          # Índice do menor elemento
+
+        for j in range(low, high):
+            if array[j] <= pivot:
+                i = i + 1
+                array[i], array[j] = array[j], array[i]  # Troca de posições
+                pprint(array)  # Imprime o array a cada troca
+
+        # Coloca o pivô na posição correta
+        array[i + 1], array[high] = array[high], array[i + 1]
+        pprint(array)  # Imprime o array após posicionar o pivô
+        return i + 1
+
+    # Função recursiva para aplicar o Quick Sort
+    def quick_sort_recursive(array, low, high):
+        if low < high:
+            # Divide o array e obtém o índice do pivô
+            pi = partition(array, low, high)
+
+            # Ordena as duas subpartições
+            quick_sort_recursive(array, low, pi - 1)
+            quick_sort_recursive(array, pi + 1, high)
+
+    # Chama a função recursiva para ordenar o array
+    quick_sort_recursive(arr, 0, len(arr) - 1)
+    return arr
+
+
+# --------------------------------------------------------------------------
+# Mostrar Resultados
+# --------------------------------------------------------------------------
+def mostrar_resultado(arr):
+    print("Array Ordenado:")
+    for i in range(0, len(arr), 30):
+        print(arr[i : i + 30])
+    print("Nro de Passos:", passos)
+
+
+def carregar_array():
+    arr = []
+    with open("array.csv", "r") as f:
+        for line in f:
+            arr.append(int(line))
+    return arr
+
+
+# --------------------------------------------------------------------------
+# Principal
+# --------------------------------------------------------------------------
+if __name__ == "__main__":
+    arr = carregar_array()
+    passos = 0
+    arr_ordenado = quick_sort(arr)
+    mostrar_resultado(arr_ordenado)
